@@ -62,8 +62,7 @@ def select_folder():
     )
     return file_selected
 
-if __name__ == "__main__":
-    
+def main():
     path = select_folder()
     print(path)
     #create dataframes (df):
@@ -90,7 +89,7 @@ if __name__ == "__main__":
                 if (input_df[input_df.Name == opfer].Fam_ID.values != input_df.Fam_ID[i]) and (input_df[input_df.Name == opfer].Partner_ID.values != input_df.Partner_ID[i]):
                     check = 1
                     candidates_df = candidates_df.drop(candidates_df.index[r])
-                    output_df.Name_Empfänger[i] = opfer
+                    output_df.loc[i, "Name_Empfänger"] = opfer
         if output_df['Name_Empfänger'].isna().any():
             leave = False
         else:
@@ -111,6 +110,10 @@ if __name__ == "__main__":
         name = output_df.Name_Wichtel[i]
         receiver_email = input_df[input_df.Name == output_df.Name_Wichtel[i]].Email.values[0]
         opfer = output_df.Name_Empfänger[i]
-        text = 'Hallihallo liebe/r ' + name + '\n\nDie (un)glückliche Person, die du beschenken darfst, heeeeisst.... ' + opfer + '!!! Überleg dir etwas Schönes und dann sehen wir uns am 25.12. bei Fabi!\n\nLiebe Grüsse,\nder Wichtelkönig' 
-        print(name, receiver_email, opfer)
-        #send_email(sender_email, password, receiver_email, subject, text) #uncomment to send email
+        text = 'Hallihallo liebe/r ' + name + '\n\nDie (un)glückliche Person, die du beschenken und zeichnen darfst, heeeeisst.... ' + opfer + '!!! Überleg dir etwas Schönes und dann sehen wir uns am 25.12. bei Fabi und Ivana!\n\nLiebe Grüsse,\nder Wichtelkönig' 
+        # print(name, receiver_email, opfer)
+        send_email(sender_email, password, receiver_email, subject, text) #uncomment to send email
+
+
+if __name__ == "__main__":
+    main()
